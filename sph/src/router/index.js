@@ -48,5 +48,10 @@ export default new VueRouter({
          component: Register,
          meta:{show:false}
       },
+      //重定向
+      {
+         path: '*',
+         redirect: '/home'
+      }
    ]
 })
