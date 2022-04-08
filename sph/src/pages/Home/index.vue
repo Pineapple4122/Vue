@@ -22,7 +22,7 @@ import Brand from '@/pages/Home/Brand'
 
 export default {
    name: 'Home',
-   comments:{
+   components:{
       ListContainer,
       Recommend,
       Rank,
