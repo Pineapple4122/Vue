@@ -84,7 +84,7 @@ import { mapState } from "vuex";
 //把lodash全部功能函数引入
 // import _ from 'lodash'
 //按需引入
-import throttle from "lodash";
+import throttle from "lodash/throttle";
 
 export default {
   name: "TypeNav",
@@ -97,7 +97,7 @@ export default {
   },
   //组件挂载完毕：可以向服务器发请求
   mounted() {
-    if(this.$router.path !== '/home'){
+    if(this.$route.path !== '/home'){
       this.show = false
     }
   },
@@ -122,13 +122,13 @@ export default {
     //一级分类鼠标移出的事件回调
     leaveShow() {
       this.currentIndex = -1;
-      if(this.$router.path !== '/home'){
+      if(this.$route.path !== '/home'){
         this.show = false
       }
     },
 
     enterShow(){
-      if(this.$router.path !== '/home'){
+      if(this.$route.path !== '/home'){
         this.show = true
       }
     },
@@ -151,9 +151,13 @@ export default {
         }else{
           query.category3Id = category3id
         }
-        //整理完参数
-        location.query = query
-        this.$router.push(location)
+        //判断：如果路由跳转的时候，带有params参数，则传递进去
+        if(this.$route.params){
+          location.params = this.$route.params
+          //动态给location配置对象添加query属性
+          location.query = query
+          this.$router.push(location)
+        }
       }
     },
   },

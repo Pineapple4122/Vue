@@ -56,8 +56,13 @@ export default {
     }
   },
   methods: {
+    //搜索按钮的事件处理函数，用于跳转到search路由组件当中
     goSearch(){
-      this.$router.push('/search')
+      if(this.$route.query){
+        let location = {name:'search',params:{keyword:this.keyword || undefined}}
+        location.query = this.$route.query
+        this.$router.push(location)
+      }
     }
   },
 };
