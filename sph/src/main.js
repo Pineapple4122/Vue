@@ -4,6 +4,8 @@ import App from './App.vue'
 import router from '@/router'
 //引入仓库
 import store from '@/store'
+//引入swiper样式
+import 'swiper/css/swiper.css'
 
 Vue.config.productionTip = false
 
@@ -11,10 +13,10 @@ Vue.config.productionTip = false
 import TypeNav from '@/components/TypeNav'
 //第一个参数：全局组件的名字 第二个参数：哪一个组件
 Vue.component(TypeNav.name,TypeNav)
+import Carousel from '@/components/Carousel'
+Vue.component(Carousel.name,Carousel)
 
 import '@/mock/mockServe.js'
-//引入swiper样式
-import 'swiper/css/swiper.css'
 
 new Vue({
   render: h => h(App),
