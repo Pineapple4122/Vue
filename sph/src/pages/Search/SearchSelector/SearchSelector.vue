@@ -4,7 +4,9 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId">{{trademark.tmName}}</li>
+          <li v-for="(trademark, index) in trademarkList" :key="trademark.tmId">
+            {{ trademark.tmName }}
+          </li>
           <li><img src="./images/phone06.png" /></li>
           <li><img src="./images/phone09.png" /></li>
           <li><img src="./images/phone10.png" /></li>
@@ -20,12 +22,16 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
-    <div class="type-wrap" v-for="(attr,index) in attrsList" :key="attr.attrId">
-      <div class="fl key">{{attr.attrName}}</div>
+    <div
+      class="type-wrap"
+      v-for="(attr, index) in attrsList"
+      :key="attr.attrId"
+    >
+      <div class="fl key">{{ attr.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue,index) in attr.attrValueList" :key="index">
-            <a>{{attrValue}}</a>
+          <li v-for="(attrValue, index) in attr.attrValueList" :key="index">
+            <a>{{ attrValue }}</a>
           </li>
         </ul>
       </div>
@@ -35,13 +41,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   name: "SearchSelector",
-  computed:{
-    ...mapGetters(['trademarkList','attrsList'])
-  }
+  computed: {
+    ...mapGetters(["trademarkList", "attrsList"]),
+  },
 };
 </script>
 

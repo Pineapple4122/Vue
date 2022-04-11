@@ -20,6 +20,10 @@ import '@/mock/mockServe.js'
 
 new Vue({
   render: h => h(App),
+  //全局事件总线
+  beforeCreate() {
+    Vue.prototype.$bus = this
+  },
   router,
   store
 }).$mount('#app')

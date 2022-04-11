@@ -11,10 +11,16 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <!-- 分类的面包屑 -->
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{searchParams.categoryName}}
+              <i @click="removeCategoryName">x</i>
+            </li>
+            <!-- 关键字的面包屑 -->
+            <li class="with-x" v-if="searchParams.keyword">
+              {{searchParams.keyword}}
+              <i @click="removeKeyword">x</i>
+            </li>
           </ul>
         </div>
 
@@ -50,7 +56,11 @@
           <!-- 商品列表 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5" v-for="(good,index) in goodsList" :key="good.id">
+              <li
+                class="yui3-u-1-5"
+                v-for="(good, index) in goodsList"
+                :key="good.id"
+              >
                 <div class="list-wrap">
                   <div class="p-img">
                     <a href="item.html" target="_blank"
@@ -60,7 +70,7 @@
                   <div class="price">
                     <strong>
                       <em>¥</em>
-                      <i>{{good.price}}.00</i>
+                      <i>{{ good.price }}.00</i>
                     </strong>
                   </div>
                   <div class="attr">
@@ -68,7 +78,7 @@
                       target="_blank"
                       href="item.html"
                       title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                      >{{good.title}}</a
+                      >{{ good.title }}</a
                     >
                   </div>
                   <div class="commit">
@@ -126,7 +136,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 
 export default {
@@ -137,7 +147,7 @@ export default {
   data() {
     return {
       //带给服务器参数
-      searchParams:{
+      searchParams: {
         //一级分类id
         category1Id: "",
         //二级分类id
@@ -157,23 +167,61 @@ export default {
         //平台售卖属性带的参数
         props: [],
         //品牌
-        trademark: ""
+        trademark: "",
+      },
+    };
+  },
+  computed: {
+    ...mapGetters(["goodsList", "trademarkList", "attrsList"]),
+  },
+  methods: {
+    //发请求调数据的函数
+    getData() {
+      this.$store.dispatch("getSearchList", this.searchParams);
+    },
+
+    //删除分类名字
+    removeCategoryName(){
+      this.searchParams.category1Id = undefined
+      this.searchParams.category2Id = undefined
+      this.searchParams.category3Id = undefined
+      this.searchParams.categoryName = undefined
+      // this.getData()
+      //更改地址栏：路由跳转到自己，删除query参数
+      if(this.$route.params){
+        this.$router.push({name:'search',params:this.$route.params})
+      }
+    },
+
+    //删除关键字
+    removeKeyword(){
+      this.searchParams.keyword = undefined
+      //通知兄弟组件Header清除关键字
+      this.$bus.$emit('clear')
+      // this.getData()
+      //更改地址栏：路由跳转到自己，删除params参数
+      if(this.$route.query){
+        this.$router.push({name:'search',query:this.$route.query})
       }
     }
   },
-  computed:{
-    ...mapGetters(['goodsList','trademarkList','attrsList'])
-  },
-  methods: {
-    getData(){
-      this.$store.dispatch('getSearchList',)
-    }
-  },
   beforeMount() {
-    Object.assign(this.searchParams,this.$route.query,this.$route.params)
+    //在挂载前整理好参数
+    Object.assign(this.searchParams, this.$route.query, this.$route.params);
   },
   mounted() {
-    this.getData()
+    this.getData();
+  },
+  watch: {
+    //监听路由信息是否发生变化，如果变化，整理参数，再次发起请求
+    $route(newValue, oldValue) {
+      //每次请求前把上一次分类id置空
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      this.getData();
+    },
   },
 };
 </script>
