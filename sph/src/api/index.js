@@ -12,3 +12,5 @@ export const reqGetBannerList = ()=>mockRequests.get('/banner')
 export const reqFloorList = ()=>mockRequests.get('/floor')
 //搜索接口
 export const reqGetSearchInfo = (params)=>requests({url:'/list',method:'post',data:params})
+//商品详情接口
+export const reqGoodsInfo = (skuId)=>requests({url:`/item/${skuId}`,method:'get'})
