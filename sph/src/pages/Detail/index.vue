@@ -97,12 +97,12 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" :v-model="skuNum" @change="changeSkuNum"/>
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNum=1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addShopcar">加入购物车</a>
               </div>
             </div>
           </div>
@@ -348,6 +348,12 @@ import Zoom from "./Zoom/Zoom";
 export default {
   name: "Detail",
 
+  data() {
+    return {
+      skuNum:1
+    }
+  },
+
   components: {
     ImageList,
     Zoom,
@@ -370,6 +376,35 @@ export default {
       })
       //点击的那个为高亮
       saleAttrValue.isChecked = '1'
+    },
+
+    //表单元素修改产品个数
+    changeSkuNum(event){
+      //如果输入的不是数字，value值就为nan
+      let value = event.target.value * 1
+      //用户输入非法，出现nan或者小于1的数字
+      if(isNaN(value) || value < 1){
+        this.skuNum = 1
+      }else{
+        //处理输入的小数
+        this.skuNum = parseInt(value)
+      }
+    },
+
+    //加入购物车
+    async addShopcar(){
+      //1.发请求：将商品加入到数据库（通知服务器）
+      try {
+        //调用addOrUpdateShopCart方法，注意async返回的是一个promise对象
+        await this.$store.dispatch('addOrUpdateShopCart',{skuId:this.$route.params.skuId,skuNum:this.skuNum})
+        //2.服务器存储成功---进行路由跳转传递参数
+        //商品信息简单的通过query传递，复杂的通过浏览器会话存储
+        this.$router.push({name:'addcartsuccess',query:{skuNum:this.skuNum}})
+        //浏览器存储只能是字符串格式
+        sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo))
+      } catch (error) {
+        alert(error.message)
+      }
     }
   },
 

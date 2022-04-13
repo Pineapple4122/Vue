@@ -1,11 +1,11 @@
 <template>
   <div class="spec-preview">
     <img :src="imgObj.imgUrl" />
-    <div class="event"></div>
+    <div class="event" @mousemove="handler"></div>
     <div class="big">
-      <img :src="imgObj.imgUrl" />
+      <img :src="imgObj.imgUrl" ref="big"/>
     </div>
-    <div class="mask"></div>
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
@@ -25,6 +25,27 @@
       //防止控制台 因未接收到数据 而读取不到imgUrl 报错
       imgObj(){
         return this.skuImageList[this.currentIndex] || {}
+      }
+    },
+
+    methods: {
+      //放大镜功能
+      handler(event){
+        let mask = this.$refs.mask
+        let big = this.$refs.big
+        //计算left和top
+        let left = event.offsetX - mask.offsetWidth / 2
+        let top = event.offsetY - mask.offsetHeight / 2
+        //约束范围
+        if(left <= 0) left = 0
+        if(left >= mask.offsetWidth) left = mask.offsetWidth
+        if(top <= 0) top = 0
+        if(top >= mask.offsetHeight) top = mask.offsetHeight
+        mask.style.left = left + 'px'
+        mask.style.top = top + 'px'
+        //注意放大图片的left和top
+        big.style.left = -2 * left + 'px'
+        big.style.top = -2 * top + 'px'
       }
     },
 
