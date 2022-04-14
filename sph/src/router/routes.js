@@ -16,7 +16,7 @@ export default [
    {
       path: '/addcartsuccess',
       component: AddCartSuccess,
-      name: addcartsuccess,
+      name: 'addcartsuccess',
       meta:{show:true}
    },
    {

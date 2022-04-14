@@ -18,3 +18,7 @@ export const reqGoodsInfo = (skuId)=>requests({url:`/item/${skuId}`,method:'get'
 export const reqAddOrUpdateShopCart = (skuId,skuNum)=>requests({url:`/cart/addToCart/${skuId}/${skuNum}`,method:'post'})
 //获取购物车列表数据接口
 export const reqShopCart = ()=>requests({url:'/cart/cartList',method:'get'})
+//删除购物产品的接口
+export const reqDeleteCartById = (skuId)=>requests({url:`/cart/deleteCart/${skuId}`,method:'delete'})
+//切换商品选中状态的接口
+export const reqUpdateCheckedById = (skuId,isChecked)=>requests({url:`cart/checkCart/${skuId}/${isChecked}`,method:'get'})

@@ -18,9 +18,9 @@ const requests = axios.create({
 requests.interceptors.request.use((config)=>{
    //进度条开始动
    nprogress.start()
-   if(store.state.detail.uuit_token){
+   if(store.state.detail.uuid_token){
       //请求头添加一个字段，传递用户身份标识
-      config.headers.userTempId = store.state.detail.uuit_token
+      config.headers.userTempId = store.state.detail.uuid_token
    }
    return config
 })
