@@ -40,6 +40,16 @@ const actions = {
       });
       //数组里promise状态都为成功，才返回true，不是promise会被转化为成功的promise
       return Promise.all(promiseAll)
+   },
+
+   //修改后台商品全选状态
+   updateAllCartIsChecked({dispatch,getters},isChecked){
+      let promiseAll = []
+      getters.cartList.cartInfoList.forEach((item)=>{
+         let promise = dispatch('updateCheckedById',{skuId:item.skuId,isChecked:isChecked})
+         promiseAll.push(promise)
+      })
+      return Promise.all(promiseAll)
    }
 }
 
