@@ -22,6 +22,10 @@ requests.interceptors.request.use((config)=>{
       //请求头添加一个字段，传递用户身份标识
       config.headers.userTempId = store.state.detail.uuid_token
    }
+   //在请求头添加用户token
+   if(store.state.user.token){
+      config.headers.token = store.state.user.token
+   }
    return config
 })
 //响应拦截器

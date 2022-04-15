@@ -5,10 +5,16 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <!-- 没有用户名，未登录 -->
+          <p v-if="!userName">
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
+          </p>
+          <!-- 登陆了 -->
+          <p v-else>
+            <a>{{userName}}</a>
+            <a class="register" @click="logout">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -50,11 +56,20 @@
 <script>
 export default {
   name: "Header",
+
   data() {
     return {
       keyword: ''
     }
   },
+
+  computed:{
+    //用户名信息
+    userName(){
+      return this.$store.state.user.userInfo.name
+    }
+  },
+
   methods: {
     //搜索按钮的事件处理函数，用于跳转到search路由组件当中
     goSearch(){
@@ -62,6 +77,18 @@ export default {
         let location = {name:'search',params:{keyword:this.keyword || undefined}}
         location.query = this.$route.query
         this.$router.push(location)
+      }
+    },
+
+    //退出登录
+    async logout(){
+      //需要发请求，通知服务器退出登录（清除一些数据）
+      try {
+        await this.$store.dispatch('userLogout')
+        //退出成功，回到首页
+        this.$router.push('/home')
+      } catch (error) {
+        alert(error.message)
       }
     }
   },

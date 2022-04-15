@@ -23,7 +23,7 @@ const actions = {
 
    //修改购物车某一产品的选中状态
    async updateCheckedById({ commit }, { skuId, isChecked }) {
-      let result = await reqDeleteCartById(skuId, isChecked)
+      let result = await reqUpdateCheckedById(skuId, isChecked)
       if (result.code == 200) {
          return 'ok'
       } else {

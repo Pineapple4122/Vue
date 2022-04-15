@@ -22,3 +22,13 @@ export const reqShopCart = ()=>requests({url:'/cart/cartList',method:'get'})
 export const reqDeleteCartById = (skuId)=>requests({url:`/cart/deleteCart/${skuId}`,method:'delete'})
 //切换商品选中状态的接口
 export const reqUpdateCheckedById = (skuId,isChecked)=>requests({url:`cart/checkCart/${skuId}/${isChecked}`,method:'get'})
+//获取手机验证码的接口
+export const reqGetCode = (phone)=>requests({url:`/user/passport/sendCode/${phone}`,method:'get'})
+//注册接口
+export const reqUserRegister = (data)=>requests({url:'/user/passport/register',data,method:'post'})
+//登录接口
+export const reqUserLogin = (data)=>requests({url:'/user/passport/login',data,method:'post'})
+//获取用户信息（需要带着用户的token向服务器要用户信息，token通过拦截器放在请求头中）
+export const reqUserInfo = ()=>requests({url:'/user/passport/auth/getUserInfo',method:'get'})
+//退出登录接口
+export const reqLogout = ()=>requests({url:'/user/passport/logout',method:'get'})
