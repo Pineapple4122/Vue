@@ -121,7 +121,13 @@
             </ul>
           </div>
           <!-- 分页 -->
-          <Pagination :pageNo='searchParams.pageNo' :pageSize='searchParams.pageSize' :total='total' :continues='5' @getPageNo="getPageNo"/>
+          <Pagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @getPageNo="getPageNo" 
+          />
         </div>
       </div>
     </div>
@@ -129,7 +135,7 @@
 </template>
 
 <script>
-import { mapGetters,mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 
 export default {
@@ -182,8 +188,8 @@ export default {
 
     //获取总页数
     ...mapState({
-      total:state=>state.search.searchList.total
-    })
+      total: (state) => state.search.searchList.total,
+    }),
   },
   methods: {
     //发请求调数据的函数
@@ -258,10 +264,10 @@ export default {
     },
 
     //自定义事件，获取用户点击的是第几页，然后重新请求数据
-    getPageNo(pageNo){
-      this.searchParams.pageNo = pageNo
-      this.getData()
-    }
+    getPageNo(pageNo) {
+      this.searchParams.pageNo = pageNo;
+      this.getData();
+    },
   },
   beforeMount() {
     //在挂载前整理好参数
