@@ -157,7 +157,7 @@
 
 <script>
 export default {
-  name: MyOrder,
+  name: 'MyOrder',
 
   data() {
     return {

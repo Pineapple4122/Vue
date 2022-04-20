@@ -1,4 +1,4 @@
-import { reqGetCode, reqUserInfo, reqUserRegister, reqLogout } from "@/api"
+import { reqGetCode, reqUserInfo, reqUserRegister, reqLogout, reqUserLogin} from "@/api"
 import { setToken, getToken, removeToken } from "@/utils/token"
 
 const state = {

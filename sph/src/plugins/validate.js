@@ -1,6 +1,6 @@
 //vee-validate插件：表单验证
 import Vue from 'vue'
-import VeeValidate, { Field } from 'vee-validate'
+import VeeValidate from 'vee-validate'
 //中文提示信息
 import zh_CN from 'vee-validate/dist/locale/zh_CN'
 Vue.use(VeeValidate)

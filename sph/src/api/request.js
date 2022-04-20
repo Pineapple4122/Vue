@@ -7,7 +7,7 @@ import 'nprogress/nprogress.css'
 
 import store from '@/store'
 
-//创建axios实例，request就是axios，只不过稍微配置一下
+//创建axios实例，requests就是axios，只不过稍微配置一下
 const requests = axios.create({
    //配置对象
    baseURL: '/api',

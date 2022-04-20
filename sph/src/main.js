@@ -16,13 +16,15 @@ import TypeNav from '@/components/TypeNav'
 //第一个参数：全局组件的名字 第二个参数：哪一个组件
 Vue.component(TypeNav.name,TypeNav)
 import Carousel from '@/components/Carousel'
-Vue.component(Carousel.name,Carousel)
+Vue.component(Carousel.name,Carousel)  //轮播图
 import Pagination from '@/components/Pagination'
-Vue.component(Pagination.name,Pagination)
+Vue.component(Pagination.name,Pagination)  //分页器
 
+//执行调用一下mockserve里面的代码
 import '@/mock/mockServe.js'
 
 //使用Element UI组件并按需引入
+//弹出框
 import {MessageBox} from 'element-ui'
 Vue.prototype.$msgbox = MessageBox
 Vue.prototype.$alert = MessageBox.alert
@@ -34,7 +36,7 @@ import VueLazyLoad from 'vue-lazyload'
 import '@/plugins/validate'
 
 new Vue({
-  render: h => h(App),
+  render: h => h(App),  // h--createElement
   //全局事件总线
   beforeCreate() {
     Vue.prototype.$bus = this

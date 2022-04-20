@@ -11,7 +11,7 @@ import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
 import PaySuccess from '@/pages/PaySuccess'
 import Center from '@/pages/Center'
-//引入一级路由组件
+//引入二级路由组件
 import MyOrder from '@/pages/Center/myOrder'
 import GroupOrder from '@/pages/Center/groupOrder'
 
@@ -33,7 +33,7 @@ export default [
          //重定向
          {
             path: '/center',
-            component: '/center/myorder'
+            redirect: '/center/myorder'
          }
       ]
    },

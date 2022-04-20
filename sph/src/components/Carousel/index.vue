@@ -32,6 +32,8 @@ export default {
           var mySwiper = new Swiper(this.$refs.cur, {
             loop: true, // 循环模式选项
 
+            autoplay: true, // 自动切换
+
             // 如果需要分页器
             pagination: {
               el: ".swiper-pagination",
