@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "99256521",
+      "name": "Menu",
+      "font_class": "Menu",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "99256522",
+      "name": "detail-hero",
+      "font_class": "detail-hero",
+      "unicode": "e6d5",
+      "unicode_decimal": 59093
+    },
+    {
+      "icon_id": "22813453",
+      "name": "menu",
+      "font_class": "menu",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    }
+  ]
+}
