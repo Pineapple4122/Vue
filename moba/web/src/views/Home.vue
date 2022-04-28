@@ -41,12 +41,14 @@
     <!-- end of nav icons -->
 
     <m-list-card icon="Menu" title="新闻资讯" :categories="newCats">
-      <div class="py-2" v-for="n in 5" :key="n">
-        <span>[新闻]</span>
+      <template #items="{category}">
+        <div class="py-2" v-for="(news,i) in category.newsList" :key="i">
+        <span>[{{news.categoryName}}}]</span>
         <span>|</span>
-        <span>夏日新版本“稷下星之队”即将6月上线</span>
-        <span>06/02</span>
+        <span>{{news.title}}</span>
+        <span>{{news.data}}</span>
       </div>
+      </template>
     </m-list-card>
   </div>
 </template>

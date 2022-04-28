@@ -2,7 +2,8 @@
   <m-card :icon="icon" :title="title">
     <div class="nav jc-between">
       <div class="nav-item" :class="{active:active===i}" 
-      v-for="(category,i) in categories" :key="i">
+      v-for="(category,i) in categories" :key="i"
+      @click="active=i">
         <div class="nav-link">{{category.name}}</div>
       </div>
     </div>
