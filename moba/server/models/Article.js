@@ -8,6 +8,8 @@ const schema = new mongoose.Schema({
         ref: 'Category' //关联Category模型
     },
     body: {type: String}
+},{
+    timestamps: true // 时间戳，自动生成两个时间createAt和updateAt
 })
 
 module.exports = mongoose.model('Article', schema)

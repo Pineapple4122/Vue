@@ -33,7 +33,7 @@ module.exports = app => {
         }
         //populate联表查询，与Category里面的ref呼应
         //操作之后返回items的parent属性里面就有Category的name和_id
-        const items = await req.Model.find().setOptions(queryOptions).limit(10)
+        const items = await req.Model.find().setOptions(queryOptions).limit(100)
         res.send(items)
     })
     //根据ID获取数据的接口
