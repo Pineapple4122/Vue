@@ -9,7 +9,8 @@ const routes = [
     name: 'main',
     component: ()=>import('@/views/Main'),
     children: [
-      {path:'/',name:'home',component:()=>import('@/views/Home')}
+      {path:'/',name:'home',component:()=>import('@/views/Home')},
+      {path:'/articles/:id',name:'article',component:()=>import('@/views/Article'),props:true},
     ]
   },
 ]

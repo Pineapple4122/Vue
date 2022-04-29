@@ -41,24 +41,46 @@
     <!-- end of nav icons -->
 
     <m-list-card icon="Menu" title="新闻资讯" :categories="newCats">
-      <template #items="{ category }"> 
-        <div
+      <template #items="{ category }">
+        <router-link
+        tag="div" :to="`/articles/${news._id}`"
           class="py-2 fs-lg d-flex"
           v-for="(news, i) in category.newsList"
           :key="i"
         >
           <span class="text-info">[{{ news.categoryName }}}]</span>
           <span class="px-2">|</span>
-          <span class="flex-1 text-dark-1 text-ellipsis pr-2">{{ news.title }}</span> 
+          <span class="flex-1 text-dark-1 text-ellipsis pr-2">{{
+            news.title
+          }}</span>
           <span class="text-grey-1">{{ news.createdAt | date }}</span>
+        </router-link>
+      </template>
+    </m-list-card>
+
+    <m-list-card icon="detail-hero" title="英雄列表" :categories="heroCats">
+      <template #items="{ category }">
+        <div class="d-flex flex-wrap" style="margin: 0 -0.5rem">
+          <div
+            class="p-2 text-center"
+            style="width: 20%"
+            v-for="(hero, i) in category.heroList"
+            :key="i"
+          >
+            <img :src="hero.avatar" class="w-100" />
+            <div>{{ hero.name }}</div>
+          </div>
         </div>
       </template>
     </m-list-card>
+
+    <m-card icon="Menu" title="精彩视频"></m-card>
+    <m-card icon="Menu" title="图文攻略"></m-card>
   </div>
 </template>
 
 <script>
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 export default {
   data() {
     return {
@@ -69,13 +91,14 @@ export default {
         },
       },
       newCats: [],
+      heroCats: [],
     };
   },
 
   filters: {
-    date(val){
-      return dayjs(val).format('MM/DD') 
-    }
+    date(val) {
+      return dayjs(val).format("MM/DD");
+    },
   },
 
   methods: {
@@ -83,10 +106,15 @@ export default {
       const res = await this.$http.get("news/list");
       this.newCats = res.data;
     },
+    async fetchHeroCats() {
+      const res = await this.$http.get("heroes/list");
+      this.newCats = res.data;
+    },
   },
 
   created() {
     this.fetchNewsCats();
+    this.fetchHeroCats();
   },
 };
 </script>
