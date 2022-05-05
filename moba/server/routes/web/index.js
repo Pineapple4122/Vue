@@ -147,5 +147,11 @@ module.exports = app => {
         res.send(data)
     })
 
+    // 英雄详情
+    router.get('/heroes/:id',async (req,res) => {
+        const data = await Hero.findById(req.params.id).populate('categories items1 items2 hero.avatar').lean()
+        res.send(data)
+    })
+
     app.use('/web/api', router)
 }

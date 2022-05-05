@@ -4,6 +4,9 @@ const mongoose = require('mongoose')
 const schema = new mongoose.Schema({
     name: { type: String },
     avatar: { type: String },
+    banner: { type: String },
+    delay: { type: String },
+    cost: { type: String },
     title: { type: String },
     categories: [{
         type: mongoose.Schema.Types.ObjectId,

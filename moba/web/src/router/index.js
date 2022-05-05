@@ -13,6 +13,7 @@ const routes = [
       {path:'/articles/:id',name:'article',component:()=>import('@/views/Article'),props:true},
     ]
   },
+  {path:'/heroes/:id',name:'hero',component:()=>import('@/views/Hero'),props:true}
 ]
 
 const router = new VueRouter({
