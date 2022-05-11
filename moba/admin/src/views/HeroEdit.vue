@@ -263,7 +263,7 @@ export default {
   },
 
   created() {
-    this.id && fetch();
+    this.id && this.fetch();
     this.fetchCategories();
     this.fetchItems();
     this.fetchHeroes()

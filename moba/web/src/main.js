@@ -19,7 +19,8 @@ Vue.component('m-list-card',ListCard)
 
 import Axios from 'axios'
 Vue.prototype.$http = Axios.create({
-  baseURL: 'http://localhost:3000/web/api'
+  // baseURL: 'http://localhost:3000/web/api'
+  baseURL: process.env.VUE_APP_API_URL || '/web/api'
 })
 
 new Vue({

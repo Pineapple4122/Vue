@@ -64,7 +64,7 @@ export default {
   },
 
   created() {
-    this.id && fetch();
+    this.id && this.fetch();
   },
 };
 </script>

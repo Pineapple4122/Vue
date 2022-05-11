@@ -63,8 +63,8 @@ export default {
   },
 
   created() {
-    fetchParents();
-    this.id && fetch();
+    this.fetchParents();
+    this.id && this.fetch();
   },
 };
 </script>

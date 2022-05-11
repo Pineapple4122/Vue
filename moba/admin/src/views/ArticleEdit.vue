@@ -83,8 +83,8 @@ export default {
   },
 
   created() {
-    fetchCategories();
-    this.id && fetch();
+    this.fetchCategories();
+    this.id && this.fetch();
   },
 };
 </script>
