@@ -46,9 +46,9 @@ module.exports = app => {
     const resourceMiddleware = require('../../middleware/resource')
     //这样写可以实现通用的动态资源请求接口
     //使用了中间件，其实就是一个路径对应多个处理，然后链式按顺序处理
-    app.use('/admin/api/rest/:resource',resourceMiddleware(),router)
-    // app.use('/admin/api/rest/:resource',authMiddleware(),resourceMiddleware(),router)
-    
+    // app.use('/admin/api/rest/:resource',resourceMiddleware(),router)
+    app.use('/admin/api/rest/:resource',authMiddleware(),resourceMiddleware(),router)
+
 // -------------------------------
     //使用插件处理上传的图片
     //中间件处理之后会将图片数据挂载在req上,如下面的req.file

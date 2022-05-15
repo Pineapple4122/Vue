@@ -4,18 +4,19 @@
     <el-table :data="items">
       <el-table-column prop="_id" label="ID" width="240"> </el-table-column>
       <el-table-column prop="name" label="名称"> </el-table-column>
-      <el-table-column fixed="right" label="操作" width="180"> </el-table-column>
-      <template slot-scope="scope">
-        <el-button
-          type="text"
-          size="small"
-          @click="$router.push(`/ads/edit/${scope.row._id}`)"
-          >编辑</el-button
-        >
-        <el-button type="text" size="small" @click="remove(scope.row)"
-          >删除</el-button
-        >
-      </template>
+      <el-table-column fixed="right" label="操作" width="180">
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            size="small"
+            @click="$router.push(`/ads/edit/${scope.row._id}`)"
+            >编辑</el-button
+          >
+          <el-button type="text" size="small" @click="remove(scope.row)"
+            >删除</el-button
+          >
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>

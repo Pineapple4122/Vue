@@ -70,6 +70,7 @@
       </el-header>
 
       <el-main>
+        <!-- 组件复用，跳转相同路径的路由时不进行vue重构 -->
         <router-view :key="$route.path"></router-view>
       </el-main>
     </el-container>

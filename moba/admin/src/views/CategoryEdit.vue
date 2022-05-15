@@ -39,10 +39,10 @@ export default {
       let res;
       if (this.id) {
         //根据ID修改
-        res = await this.$http.put(`/rest/categories/${this.id}`, this.model);
+        res = await this.$http.put(`rest/categories/${this.id}`, this.model);
       } else {
         //新增
-        res = await this.$http.post("/rest/categories", this.model);
+        res = await this.$http.post("rest/categories", this.model);
       }
       this.$router.push("/categories/list");
       this.$message({
@@ -52,12 +52,12 @@ export default {
     },
     //通过ID获取数据
     async fetch() {
-      const res = await this.$http.get(`/rest/categories/${this.id}`);
+      const res = await this.$http.get(`rest/categories/${this.id}`);
       this.model = res.data;
     },
     //获取上级分类
     async fetchParents() {
-      const res = await this.$http.get(`/rest/categories`);
+      const res = await this.$http.get(`rest/categories`);
       this.parents = res.data;
     },
   },
