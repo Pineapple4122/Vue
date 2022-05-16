@@ -38,6 +38,8 @@ Vue.config.productionTip = false
 // 引入全局组件
 import CategorySelect from '@/components/CategorySelect'
 Vue.component(CategorySelect.name,CategorySelect)
+import HintButton from '@/components/HintButton'
+Vue.component(HintButton.name,HintButton)
 
 import API from '@/api'
 Vue.prototype.$API = API
