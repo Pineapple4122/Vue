@@ -37,11 +37,12 @@ module.exports = {
       errors: true
     },
     // 开启mock数据
-    before: require('./mock/mock-server.js'),
+    // before: require('./mock/mock-server.js'),
     // 配置代理跨域
     proxy: {
       '/dev-api': {
-        target: 'http://39.98.123.211:8170',
+        // target: 'http://39.98.123.211:8170',
+        target: 'http://gmall-h5-api.atguigu.cn',
         pathRewrite: { '^/dev-api':'' }
       }
     }
