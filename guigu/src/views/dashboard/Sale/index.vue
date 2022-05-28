@@ -152,7 +152,7 @@ export default {
   //监听属性
   watch: {
     title() {
-      console.log("修改配置数据");
+      // console.log("修改配置数据");
       //重新修改图标的配置数据
       //图标配置数据可以再次修改，如果有新的数值，新的数值，没有新的数值，还是用以前的
       this.mycharts.setOption({
