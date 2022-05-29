@@ -29,21 +29,25 @@
         </el-table-column>
         <el-table-column prop="prop" label="操作" width="300" align="center">
            <template slot-scope="{row}">
-              <HintButton size="mini" type="info" icon="el-icon-info" title="分配权限"></HintButton>
-              <HintButton size="mini" type="primary" icon="el-icon-check" title="确定" v-if="row.edit"></HintButton>
-              <HintButton size="mini" type="primary" icon="el-icon-edit" title="修改角色" v-if="!row.edit"></HintButton>
-              <HintButton size="mini" type="danger" icon="el-icon-delete" title="删除角色"></HintButton>
+              <HintButton size="mini" type="info" icon="el-icon-info" title="分配权限"
+              @click="$router.push(`/acl/role/auth/${row.id}?roleName=${row.roleName}`)"></HintButton>
+              <HintButton size="mini" type="primary" icon="el-icon-check" title="确定" v-if="row.edit"
+              @click="updateRole(row)"></HintButton>
+              <HintButton size="mini" type="primary" icon="el-icon-edit" title="修改角色" v-if="!row.edit"
+              @click="row.edit=true"></HintButton>
+              <HintButton size="mini" type="danger" icon="el-icon-delete" title="删除角色"
+              @click="removeRole(row)"></HintButton>
            </template>
         </el-table-column>
      </el-table>
      <el-pagination
         @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageNum"
-        :page-sizes="[5, 10, 20]"
-        :page-size="pageSize"
+        @current-change="getRoles"
+        :current-page="page"
+        :page-sizes="[5, 10, 20, 30, 40, 50, 100]"
+        :page-size="limit"
         layout="prev, pager, next, jumper, ->, sizes, total"
-        :total="totalCount"
+        :total="total"
         style="padding:20px 0">
      </el-pagination>
   </div>
@@ -149,6 +153,30 @@ export default {
          role.edit = false
          this.$message.warning('取消角色修改')
       },
+      // 更新角色
+      updateRole(role){
+         this.$API.role.updateById({id:role.id,roleName:role.roleName}).then(result => {
+            this.$message.success(result.message || '更新角色成功!')
+            this.getRoles(this.page)
+         })
+      },
+      // 删除指定的角色
+      removeRoles({id,roleName}){
+         this.$confirm(`确定删除 '${roleName}' 吗？`,'提示',{
+            type: 'warning'
+         }).then(async () => {
+            const result = await this.$API.role.removeById(id)
+            this.getRoles(this.roles.length===1 ? this.page-1:this.page)
+            this.$message.success(result.message || '删除成功!')
+         }).catch(() => {
+            this.$message.info('已取消删除')
+         })
+      },
+      // 每页数量发生改变的监听
+      handleSizeChange(pageSize){
+         this.limit = pageSize
+         this.getRoles()
+      }
    },
 }
 </script>
