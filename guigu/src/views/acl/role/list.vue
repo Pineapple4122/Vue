@@ -11,7 +11,7 @@
 
     <div style="margin-bottom: 20px">
       <el-button type="primary"  @click="addRole">添加</el-button>
-      <el-button type="danger" @click="removeRoles()" :disabled="selectedRoles.length === 0">批量删除</el-button>
+      <el-button type="danger" @click="removeRoles" :disabled="selectedRoles.length === 0">批量删除</el-button>
     </div>
 
     <el-table

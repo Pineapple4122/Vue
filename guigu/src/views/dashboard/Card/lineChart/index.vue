@@ -50,7 +50,7 @@ export default {
                 },
                 {
                   offset: 1,
-                  color: "#fff", // 100% 处的颜色
+                  color: "#fff", // 100% 处的颜色 
                 },
               ],
               global: false, // 缺省为 false
