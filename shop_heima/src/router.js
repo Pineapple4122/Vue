@@ -9,7 +9,10 @@ const router = new Router({
     routes: [
         { path: '/', redirect: '/login'},
         { path: '/login', component: Login },
-        { path: '/home', component: Home },
+        { path: '/home', component: Home , redirect: '/welcome',children: [
+            { path: '/welcome', component: ()=>import('@/components/Welcome.vue') },
+            { path: '/users', component: ()=>import('@/components/user/Users.vue') },
+        ]},
     ]
 })
 
