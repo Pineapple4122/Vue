@@ -283,7 +283,7 @@ export default {
     editUserInfo() {
       this.$refs.editFormRef.validate(async (valid) => {
         if (!valid) return;
-        const { data: res } = await this.$http.put("user/" + editForm.id, {
+        const { data: res } = await this.$http.put("user/" + this.editForm.id, {
           email: this.editForm.email,
           mobile: this.editForm.mobile,
         });
