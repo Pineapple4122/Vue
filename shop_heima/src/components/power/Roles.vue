@@ -13,6 +13,27 @@
       </el-row>
       <el-table :data="roleList" border stripe >
         <el-table-column type="expand">
+          <template v-slot="{row}">
+            <el-row v-for="(item1,i1) in row.children" :key="item1.id"
+             :class="['bdbottom',i1===0?'bdtop':'','vccenter']" style="margin:0 33px">
+              <el-col :span="5">
+                <el-tag>{{item1.authName}}</el-tag>
+                <i class="el-icon-caret-right"></i>
+              </el-col>
+              <el-col :span="19">
+                <el-row v-for="(item2,i2) in item1.children" :key="item2.id"
+                 :class="[i2===0?'':'bdtop','vccenter']">
+                  <el-col :span="6">
+                    <el-tag type="success">{{item2.authName}}</el-tag>
+                    <i class="el-icon-caret-right"></i>
+                  </el-col>
+                  <el-col :span="13">
+                    <el-tag type="warning" v-for="(item3,i3) in item2.children" :key="item3.id">{{item3.authName}}</el-tag>
+                  </el-col>
+                </el-row>
+              </el-col>
+            </el-row>
+          </template>
         </el-table-column>
         <el-table-column type="index" label="序号" align="center">
         </el-table-column>
@@ -181,5 +202,21 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.el-tag{
+  margin: 7px;
+}
+
+.bdtop{
+  border-top: 1px solid #eee;
+}
+
+.bdbottom{
+  border-bottom: 1px solid #eee;
+}
+
+.vccenter{
+  display: flex;
+  align-items: center;
+}
 </style>
