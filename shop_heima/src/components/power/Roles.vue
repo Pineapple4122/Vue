@@ -47,7 +47,7 @@
           <template slot-scope="{row}">
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(row.id)">编辑</el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeRoleById(row.id)">删除</el-button>
-            <el-button type="warning" icon="el-icon-setting" size="mini" @click="showSetRightDialog">分配权限</el-button>
+            <el-button type="warning" icon="el-icon-setting" size="mini" @click="showSetRightDialog(row)">分配权限</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,7 +57,7 @@
       title="提示"
       :visible.sync="addDialogVisible"
       width="50%"
-      @closed="addDialogClosed"
+      @close="addDialogClosed"
       :before-close="handleClose">
       <el-form :model="addForm" label-width="80px" status-icon :rules="addFormRules" ref="addFormRef">
         <el-form-item label="角色名称" prop="roleName">
@@ -77,7 +77,7 @@
       title="提示"
       :visible.sync="editDialogVisible"
       width="50%"
-      @closed="this.$refs.editFormRef.resetFields()"
+      @close="$refs.editFormRef.resetFields()"
       :before-close="handleClose">
       <el-form :model="editForm" label-width="80px" status-icon :rules="editFormRules" ref="editFormRef">
         <el-form-item label="角色名称" prop="roleName">
@@ -97,13 +97,14 @@
       title="提示"
       :visible.sync="setRightDialogVisible"
       width="50%"
-      @closed="this.$refs.editFormRef.resetFields()"
+      @close="defKeys=[]"
       :before-close="handleClose">
       <el-tree :data="rightsList" :props="treeProps" show-checkbox
-       default-expand-all node-key="id" :default-checked-keys="defKeys"></el-tree>
+       default-expand-all node-key="id" :default-checked-keys="defKeys"
+        ref="treeRef"></el-tree>
       <div slot="footer">
-        <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editRole">确 定</el-button>
+        <el-button @click="setRightDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="allowRights">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -141,6 +142,7 @@ export default {
         },
         setRightDialogVisible: false,
         defKeys: [],
+        roleId: '',
      }
   },
   created() {
@@ -239,13 +241,37 @@ export default {
       }
       role.children = res.data // this,getRolesList()
     },
-    async showSetRightDialog(){
+    async showSetRightDialog(role){
       const {data:res} = await this.$http.get('rights/tree')
       if(res.meta.status !== 200){
         this.$message.error('获取权限数据失败！')
       }
       this.rightsList = res.data
       this.setRightDialogVisible = true
+      this.getLeafKeys(role,this.defKeys)
+      this.roleId = role.id
+    },
+    getLeafKeys(node,arr){
+      if(!node.children){
+        return arr.push(node.id)
+      }
+      node.children.forEach(item => {
+        this.getLeafKeys(item,arr)
+      });
+    },
+    async allowRights(){
+      const keys = [
+        ...this.$refs.treeRef.getCheckedKeys(),
+        ...this.$refs.treeRef.getHalfCheckedKeys()
+      ]
+      const idStr = keys.join(',')
+      const {data:res} = await this.$http.post(`roles/${this.roleId}/rights`,{rids:idStr})
+      if(res.meta.status !== 200){
+        return this.$message.error('分配权限失败！')
+      }
+      this.$message.success('分配权限成功！')
+      this.getRolesList()
+      this.setRightDialogVisible = false
     }
   },
 };
