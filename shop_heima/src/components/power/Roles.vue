@@ -202,7 +202,7 @@ export default {
       })
     },
     removeRoleById(id){
-      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -224,7 +224,7 @@ export default {
         });
     },
     async removeRightById(role,rightId){
-      const confrimResult = await this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+      const confrimResult = await this.$confirm('此操作将永久删除该权限, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
