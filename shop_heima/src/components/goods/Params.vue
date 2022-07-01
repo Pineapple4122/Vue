@@ -25,6 +25,20 @@
              :disabled="isBtnDisabled" @click="addDialogVisible=true">添加参数</el-button>
             <el-table :data="manyTableData" border stripe >
                <el-table-column type="expand">
+                  <template slot-scope="{row}">
+                     <el-tag closable v-for="(value,i) in row.attr_vals" :key="i">{{value}}</el-tag>
+                     <el-input
+                        class="input-new-tag"
+                        v-if="row.inputVisible"
+                        v-model="row.inputValue"
+                        ref="saveTagInput"
+                        size="small"
+                        @keyup.enter.native="handleInputConfirm(row)"
+                        @blur="handleInputConfirm(row)"
+                        >
+                     </el-input>
+                     <el-button v-else class="button-new-tag" size="small" @click="showInput(row)">+ New Tag</el-button>
+                  </template>
                </el-table-column>
                <el-table-column type="index" label="序号" align="center">
                </el-table-column>
@@ -34,7 +48,8 @@
                   <template v-slot="{row}">
                      <el-button type="primary" size="mini" icon="el-icon-edit"
                       @click="showEditDialog(row.attr_id)">编辑</el-button>
-                     <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button>
+                     <el-button type="danger" size="mini" icon="el-icon-delete"
+                      @click="removeParams(row.attr_id)">删除</el-button>
                   </template>
                </el-table-column>
              </el-table>
@@ -53,7 +68,8 @@
                   <template v-slot="{row}">
                      <el-button type="primary" size="mini" icon="el-icon-edit"
                       @click="showEditDialog(row.attr_id)">编辑</el-button>
-                     <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button>
+                     <el-button type="danger" size="mini" icon="el-icon-delete"
+                      @click="removeParams(row.attr_id)">删除</el-button>
                   </template>
                </el-table-column>
              </el-table>
@@ -174,6 +190,11 @@ export default {
          if(res.meta.status !== 200){
             return this.$message.error('获取参数列表失败！')
          }
+         res.data.forEach(item => {
+            item.attr_vals = item.attr_vals ? item.attr_vals.split(',') : []
+            this.$set(item,'inputVisible',false)
+            this.$set(item,'inputValue','')
+         });
          if(this.activeName === 'many'){
             this.manyTableData = res.data
          }else{
@@ -224,6 +245,45 @@ export default {
             this.editDialogVisible = false
             this.$message.success('修改参数成功！')
          })
+      },
+      async removeParams(attr_id){
+         const confirmResult = await this.$confirm('此操作将永久删除该参数, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+         }).catch(err => err)
+         if(confirmResult !== 'confirm'){
+            return this.$message.info('已取消删除！')
+         }
+         const {data:res} = await this.$http.delete(`categories/${this.cateId}/attributes/${attr_id}`)
+         if(res.meta.status !== 200){
+            return this.$message.error('删除参数失败！')
+         }
+         this.getParamsData()
+      },
+      showInput(row){
+         row.inputVisible = true
+         this.$nextTick(_ => {
+            this.$refs.saveTagInput.$refs.input.focus()
+         })
+      },
+      async handleInputConfirm(row){
+         if(row.inputValue.trim().length === 0){
+            row.inputValue = ''
+            row.inputVisible = false
+            return
+         }
+         row.attr_vals.push(row.inputValue.trim())
+         row.inputVisible = false
+         row.inputValue = ''
+         const {data:res} = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`,{
+            attr_name: row.attr_name,
+            attr_sel: row.attr_sel,
+            attr_vals: row.attr_vals.join(',')
+         })
+         if(res.meta.status !== 200){
+            return this.$message.error('添加参数失败！')
+         }
       }
    },
 }
@@ -232,5 +292,22 @@ export default {
 <style scoped lang="less">
 .cat_opt{
    margin: 15px 0;
+}
+
+.el-tag{
+   margin: 10px;
+}
+
+.button-new-tag {
+   margin-left: 10px;
+   height: 32px;
+   line-height: 30px;
+   padding-top: 0;
+   padding-bottom: 0;
+}
+.input-new-tag {
+   width: 90px;
+   margin-left: 10px;
+   // vertical-align: bottom;
 }
 </style>
