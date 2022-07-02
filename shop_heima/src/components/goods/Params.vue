@@ -26,7 +26,8 @@
             <el-table :data="manyTableData" border stripe >
                <el-table-column type="expand">
                   <template slot-scope="{row}">
-                     <el-tag closable v-for="(value,i) in row.attr_vals" :key="i">{{value}}</el-tag>
+                     <el-tag closable v-for="(value,i) in row.attr_vals" :key="i"
+                      @close="removeTag(i,row)">{{value}}</el-tag>
                      <el-input
                         class="input-new-tag"
                         v-if="row.inputVisible"
@@ -59,6 +60,21 @@
              :disabled="isBtnDisabled" @click="addDialogVisible=true">添加属性</el-button>
             <el-table :data="onlyTableData" border stripe >
                <el-table-column type="expand">
+                  <template slot-scope="{row}">
+                     <el-tag closable v-for="(value,i) in row.attr_vals" :key="i"
+                      @close="removeTag(i,row)">{{value}}</el-tag>
+                     <el-input
+                        class="input-new-tag"
+                        v-if="row.inputVisible"
+                        v-model="row.inputValue"
+                        ref="saveTagInput"
+                        size="small"
+                        @keyup.enter.native="handleInputConfirm(row)"
+                        @blur="handleInputConfirm(row)"
+                        >
+                     </el-input>
+                     <el-button v-else class="button-new-tag" size="small" @click="showInput(row)">+ New Tag</el-button>
+                  </template>
                </el-table-column>
                <el-table-column type="index" label="序号" align="center">
                </el-table-column>
@@ -276,6 +292,9 @@ export default {
          row.attr_vals.push(row.inputValue.trim())
          row.inputVisible = false
          row.inputValue = ''
+         this.saveAttrVals(row)
+      },
+      async saveAttrVals(row){
          const {data:res} = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`,{
             attr_name: row.attr_name,
             attr_sel: row.attr_sel,
@@ -284,7 +303,11 @@ export default {
          if(res.meta.status !== 200){
             return this.$message.error('添加参数失败！')
          }
-      }
+      },
+      removeTag(i,row){
+         row.attr_vals.splice(i,1)
+         this.saveAttrVals(row)
+      },
    },
 }
 </script>

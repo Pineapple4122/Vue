@@ -16,6 +16,11 @@ import './assets/css/global.css'
 // 导入阿里图标
 import './assets/fonts/iconfont.css'
 
+import moment from 'moment'
+Vue.filter('dateFormat',function(val){
+  return moment(val * 1000).format('YYYY-MM-DD HH:mm:ss')
+})
+
 import axios from 'axios'
 // 配置请求的根路径
 axios.defaults.baseURL = 'https://lianghj.top:8888/api/private/v1/'
