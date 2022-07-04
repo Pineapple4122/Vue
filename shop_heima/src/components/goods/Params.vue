@@ -116,7 +116,7 @@
       width="50%"
       @close="editDialogClosed">
       <el-form ref="editFormRef" :model="editForm" label-width="100px"
-       :rules="editFromRules">
+       :rules="editFormRules">
          <el-form-item :label="titleText" prop="attr_name">
             <el-input v-model="editForm.attr_name"></el-input>
          </el-form-item>

@@ -21,6 +21,12 @@ Vue.filter('dateFormat',function(val){
   return moment(val * 1000).format('YYYY-MM-DD HH:mm:ss')
 })
 
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor)
+
 import axios from 'axios'
 // 配置请求的根路径
 axios.defaults.baseURL = 'https://lianghj.top:8888/api/private/v1/'

@@ -52,16 +52,41 @@
                      </el-checkbox-group>
                   </el-form-item>
                </el-tab-pane>
-               <el-tab-pane label="商品属性" name="2">商品属性</el-tab-pane>
-               <el-tab-pane label="商品图片" name="3">商品图片</el-tab-pane>
-               <el-tab-pane label="商品内容" name="4">商品内容</el-tab-pane>
+               <el-tab-pane label="商品属性" name="2">
+                  <el-form-item :label="item.attr_name"
+                   v-for="item in onlyTableData" :key="item.attr_id">
+                     <el-input v-model="item.attr_vals"></el-input>
+                  </el-form-item>
+               </el-tab-pane>
+               <el-tab-pane label="商品图片" name="3">
+                  <el-upload
+                     class="upload-demo"
+                     action="https://lianghj.top:8888/api/private/v1/upload/"
+                     :on-preview="handlePreview"
+                     :on-remove="handleRemove"
+                     list-type="picture"
+                     :on-success="handleSuccess"
+                     :headers="headerObj">
+                     <el-button size="small" type="primary">点击上传</el-button>
+                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                  </el-upload>
+               </el-tab-pane>
+               <el-tab-pane label="商品内容" name="4">
+                  <quill-editor v-model="addForm.goods_introduce"></quill-editor>
+                  <el-button type="primary" class="btnAdd" @click="add">添加商品</el-button>
+               </el-tab-pane>
             </el-tabs>
          </el-form>
       </el-card>
+
+      <el-dialog title="图片预览" :visible.sync="previewVisible" width="50%">
+         <img :src="previewPath" class="previewImg">
+      </el-dialog>
   </div>
 </template>
 
 <script>
+import _ from 'loadsh'
 export default {
    name: 'Add',
    data() {
@@ -72,7 +97,10 @@ export default {
             goods_price: 0,
             goods_weight: 0,
             goods_number: 0,
-            goods_cat: []
+            goods_cat: [],
+            pics: [],
+            goods_introduce: '',
+            attrs: []
          },
          addFormRules: {
             goods_name: [{required: true, message:'请输入商品名称', trigger: 'blur'}],
@@ -88,6 +116,12 @@ export default {
             children: 'children'
          },
          manyTableData: [],
+         onlyTableData: [],
+         headerObj: {
+            Authorization: window.sessionStorage.getItem('token')
+         },
+         previewPath: '',
+         previewVisible: false,
       }
    },
    created() {
@@ -131,7 +165,57 @@ export default {
             });
             this.manyTableData = res.data
             // this.manuTableData = JSON.parse(JSON.stringify(res.data))
+         }else if(this.activeIndex === '2'){
+            const {data:res} = await this.$http.get(`categories/${this.cateId}/attributes`,{
+               params: {sel: 'only'}
+            })
+            if(res.meta.status !== 200){
+               return this.$message.error('获取静态属性失败！')
+            }
+            this.onlyTableData = res.data
          }
+      },
+      handleSuccess(response){
+         const picPath = {pic: response.data.tmp_path}
+         this.addForm.pics.push(picPath)
+      },
+      handleRemove(file){
+         const i = this.addForm.pics.findIndex(x => x.pic === file.response.data.tmp_path)
+         this.addForm.pics.splice(i,1)
+      },
+      handlePreview(file){
+         console.log(file);
+         this.previewPath = 'https://lianghj.top:8888/' + file.response.data.tmp_path
+         this.previewVisible = true
+      },
+      add(){
+         this.$refs.addFormRef.validate(async valid => {
+            if(!valid){
+               return this.$message.error('请填写必要的表单项！')
+            }
+            const form = _.cloneDeep(this.addForm)
+            form.goods_cat = form.goods_cat.join(',')
+            this.manyTableData.forEach(item => {
+               const newInfo = {
+                  attr_id: item.attr_id,
+                  attr_value: item.attr_vals.join(',') 
+               }
+               this.addForm.attrs.push(newInfo)
+            })
+            this.onlyTableData.forEach(item => {
+               const newInfo = {
+                  attr_id: item.attr_id,
+                  attr_value: item.attr_vals
+               }
+               this.addForm.attrs.push(newInfo)
+            })
+            form.attrs = this.addForm.attrs
+            const {data:res} = await this.$http.post('goods',form)
+            if(res.meta.status !== 201){
+               return this.$message.error('添加商品失败！')
+            }
+            this.$router.push('/goods')
+         })
       }
    },
    computed: {
@@ -148,5 +232,13 @@ export default {
 <style scoped lang="less">
 .el-checkbox {
    margin: 0 10px 0 0 !important;
+}
+
+.previewImg {
+   width: 100%;
+}
+
+.btnAdd {
+   margin-top: 15px;
 }
 </style>
