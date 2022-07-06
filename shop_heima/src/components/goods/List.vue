@@ -153,7 +153,7 @@ export default {
          }
          const {data:res} = await this.$http.delete(`goods/${id}`)
          if(res.meta.status !== 200){
-            return this.$message.error('删除失败！')
+            return this.$message.error('删除失败！') 
          }
          this.getGoodsList()
       },
