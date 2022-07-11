@@ -5,14 +5,16 @@ Page({
      * 页面的初始数据
      */
     data: {
-        swiperList: []
+        swiperList: [],
+        gridList: []
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        this.getSwiperList()
+        this.getSwiperList(),
+        this.getGridList()
     },
 
     /**
@@ -51,6 +53,18 @@ Page({
             this.setData({
                 swiperList: res.data
             })
+          }
+        })
+    },
+
+    getGridList() {
+        wx.request({
+          url: 'https://www.escook.cn/categories',
+          method: 'GET',
+          success: (res) => {
+              this.setData({
+                  gridList: res.data
+              })
           }
         })
     },

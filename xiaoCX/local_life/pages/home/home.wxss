@@ -1,1 +1,43 @@
 /* pages/home/home.wxss */
+swiper {
+	height: 350rpx;
+}
+swiper image {
+	width: 100%;
+	height: 100%;
+}
+
+.grid-list {
+	display: flex;
+	flex-wrap: wrap;
+	border-top: 1rpx solid #efefef;
+	border-left: 1rpx solid #efefef;
+}
+.grid-item {
+	width: 33.33%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 200rpx;
+	flex-direction: column;
+	box-sizing: border-box;
+	border-right: 1rpx solid #efefef;
+	border-bottom: 1rpx solid #efefef;
+}
+.grid-item image {
+	width: 60rpx;
+	height: 60rpx;
+}
+.grid-item text {
+	font-size: 24rpx;
+	margin-top: 12rpx;
+}
+
+.img-box {
+	display: flex;
+	justify-content: space-around;
+	padding: 20rpx 10rpx;
+}
+.img-box image {
+	width: 45%;
+}
