@@ -5,6 +5,7 @@ Vue.config.productionTip = false
 
 import {$http} from '@escook/request-miniprogram'
 uni.$http = $http
+// $http.baseUrl = 'https://applet-base-api-t.itheima.net'
 $http.baseUrl = 'http://api-ugo-web.itheima.net'
 $http.beforeRequest = function(options) {
   uni.showLoading({
@@ -14,6 +15,9 @@ $http.beforeRequest = function(options) {
 $http.afterRequest = function () {
   uni.hideLoading()
 }
+
+import mysearch from 'components/mysearch'
+Vue.component('my-search',mysearch)
 
 uni.$showMsg = function (title='数据请求失败！',duration=1500) {
   uni.showToast({
