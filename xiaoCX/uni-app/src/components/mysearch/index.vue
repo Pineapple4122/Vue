@@ -1,6 +1,7 @@
 <template>
-  <view class="my-search-container">
-    <view class="my-search-box">
+  <view class="my-search-container" :style="{'background-color':bgcolor}">
+    <view class="my-search-box" :style="{'border-radius':radius+'px'}"
+     @click="searchBoxHandler">
       <uni-icons type="search" size="17"></uni-icons>
       <text class="placeholder">搜索</text>
     </view>
@@ -10,11 +11,24 @@
 <script>
 import {uniIcons} from '@dcloudio/uni-ui'
 export default {
-  props: {},
+  props: {
+    bgcolor: {
+      type: String,
+      default: '#C00000'
+    },
+    radius: {
+      type: Number,
+      default: 18
+    }
+  },
   components: {uniIcons},
   data: () => ({}),
   computed: {},
-  methods: {},
+  methods: {
+    searchBoxHandler() {
+      this.$emit('click')
+    }
+  },
   watch: {},
 
   // 组件周期函数--监听组件挂载完毕
@@ -34,7 +48,7 @@ export default {
 
 <style scoped lang="scss">
 .my-search-container {
-  background-color: #C00000;
+  // background-color: #C00000;
   height: 50px;
   padding: 0 10px;
   display: flex;
@@ -42,7 +56,7 @@ export default {
   .my-search-box {
     height: 36px;
     background-color: #fff;
-    border-radius: 15px;
+    // border-radius: 15px;
     width: 100%;
     display: flex;
     align-items: center;

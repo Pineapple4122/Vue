@@ -1,5 +1,9 @@
 <template>
   <view>
+    <view class="search-box">
+      <my-search @click="gotoSearch"></my-search>
+    </view>
+
     <swiper indicator-dots autoplay circular :interval="3000" :duration="1000">
       <swiper-item v-for="(item,i) in swiperList" :key="i">
         <navigator class="swiper-item"
@@ -80,6 +84,9 @@ export default {
       });
       this.floorList = res.message
     },
+    gotoSearch() {
+      uni.navigateTo({ url: '/subpkg/search/index' })
+    }
   },
   watch: {},
 
@@ -140,5 +147,11 @@ swiper {
     flex-wrap: wrap;
     justify-content: space-around;
   }
+}
+
+.search-box {
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 </style>
