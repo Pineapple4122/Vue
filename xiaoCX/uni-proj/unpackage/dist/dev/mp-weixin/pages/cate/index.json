@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "cate",
+  "usingComponents": {
+    "my-search": "/components/my-search/my-search"
+  }
+}

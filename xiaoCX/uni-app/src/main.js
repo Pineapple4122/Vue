@@ -17,7 +17,9 @@ $http.afterRequest = function () {
 }
 
 import mysearch from 'components/mysearch'
+import mygoods from 'components/mygoods'
 Vue.component('my-search',mysearch)
+Vue.component('my-goods',mygoods)
 
 uni.$showMsg = function (title='数据请求失败！',duration=1500) {
   uni.showToast({
