@@ -26,8 +26,10 @@
 </template>
 
 <script>
+import badgeMix from '@/mixins/tabbar-badge.js'
 export default {
   components: {},
+  mixins: [badgeMix],
   data: () => ({
     wh: 0,
     cateList: [],

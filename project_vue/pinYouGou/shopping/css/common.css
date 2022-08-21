@@ -1,0 +1,132 @@
+/* 阿里图标库 */
+@font-face {
+   font-family: 'iconfont';  /* Project id 3601286 */
+   src: url('//at.alicdn.com/t/c/font_3601286_ezzaqwpp05.woff2?t=1660996425525') format('woff2'),
+        url('//at.alicdn.com/t/c/font_3601286_ezzaqwpp05.woff?t=1660996425525') format('woff'),
+        url('//at.alicdn.com/t/c/font_3601286_ezzaqwpp05.ttf?t=1660996425525') format('truetype');
+ }
+
+.w {
+   width: 1200px;
+   margin: 0 auto;
+}
+.fl {
+   float: left;
+}
+.fr {
+   float: right;
+}
+
+/* 快捷导航模块 */
+.shortcut {
+   height: 31px;
+   background-color: #f1f1f1;
+   line-height: 31px;
+}
+.shortcut ul li {
+   float: left;
+}
+.style_red {
+   color: #c81623;
+}
+
+.shortcut .fr ul li:nth-child(even) {
+   width: 1px;
+   background-color: #666;
+   height: 12px;
+   margin: 9px 15px 0;
+}
+
+.arrow-icon::after {
+   font-family: 'iconfont';
+   content: '\e87e';
+   margin-left: 6px;
+   font-size: smaller;
+}
+
+/* header模块 */
+.header {
+   height: 105px;
+   position: relative;
+}
+
+.logo {
+   position: absolute;
+   width: 171px;
+   height: 61px;
+   top: 25px;
+}
+.logo a {
+   display: block;
+   width: 171px;
+   height: 61px;
+   background: url(../images/logo.png);
+   text-indent: -999px;
+}
+
+.search {
+   position: absolute;
+   left: 346px;
+   top: 25px;
+   width: 538px;
+   height: 36px;
+   border: 2px solid #b1191a;
+}
+.search input {
+   padding-left: 10px;
+   float: left;
+   width: 454px;
+   height: 32px;
+}
+.search button {
+   float: left;
+   width: 80px;
+   height: 32px;
+   background-color: #b1191a;
+   font-size: 16px;
+   color: #fff;
+}
+
+.hotwords {
+   position: absolute;
+   top: 66px;
+   left: 346px;
+}
+.hotwords a {
+   margin: 0 10px;
+}
+
+.shopcart {
+   position: absolute;
+   right: 60px;
+   top: 25px;
+   width: 140px;
+   height: 35px;
+   line-height: 35px;
+   border: 1px solid #dfdfdf;
+   background-color: #f7f7f7;
+   text-align: center;
+}
+.shopcart::before {
+   font-family: 'iconfont';
+   content: '\e600';
+   margin-right: 5px;
+   color: #b1191a;
+   font-size: medium;
+}
+.shopcart::after {
+   font-family: 'iconfont';
+   content: '\e8d4';
+   margin-left: 10px;
+}
+.count {
+   position: absolute;
+   padding: 0 5px;
+   top: -5px;
+   left: 105px;
+   height: 14px;
+   line-height: 14px;
+   color: #fff;
+   background-color: #e60012;
+   border-radius: 7px 7px 7px 0;
+}

@@ -3,11 +3,13 @@
 </template>
 
 <script>
+import badgeMix from '@/mixins/tabbar-badge.js'
 export default {
   components: {},
   data: () => ({}),
   computed: {},
   methods: {},
+  mixins: [badgeMix],
   watch: {},
 
   // 页面周期函数--监听页面加载

@@ -130,16 +130,18 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+var _tabbarBadge = _interopRequireDefault(__webpack_require__(/*! @/mixins/tabbar-badge.js */ 131));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
-var _default =
-{
-  components: {},
-  data: function data() {return {};},
-  computed: {},
+var _default = { components: {}, data: function data() {return {};}, computed: {},
   methods: {},
+  mixins: [_tabbarBadge.default],
   watch: {},
 
   // 页面周期函数--监听页面加载
